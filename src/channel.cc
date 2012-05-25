@@ -41,7 +41,13 @@ void Channel::CallMethod(const google::protobuf::MethodDescriptor* method,
   delete [] p;
 
   RpcResponse rpc_res;
-  client_->Call(controller, &rpc_req, &rpc_res);
+  int r = client_->Call(controller, &rpc_req, &rpc_res);
+  if (r != 0) {
+    if (done) {
+      done->Run();
+    }
+    return -1;
+  }
 
   std::string e(controller->ErrorText());
   auto err = rpc_res.err();
