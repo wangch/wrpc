@@ -1,0 +1,22 @@
+
+
+package wrpc;
+
+message RpcError {
+	required int32 code = 1;
+	optional string reason = 2;
+}
+
+message RpcRequest {
+	required uint64 id = 1;
+	required string service = 2;
+	required string method = 3;
+	optional bytes req = 4;
+}
+
+message RpcResponse {
+	required uint64 id = 1;
+	required RpcError err = 2;
+	optional bytes res = 3;
+}
+

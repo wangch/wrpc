@@ -1,0 +1,76 @@
+/*
+ * Copyright 2010-2012 netbox inc. All Right Reserved.
+ */
+
+
+option cc_generic_services = true;
+
+package dragoon; 
+
+message CellMessage {
+	required int32 ant = 1;
+	required string id = 2;
+	required int32 freq = 3;
+	required int32 index = 4;
+	required int32 energy = 5;
+	repeated string nb = 6;
+	optional string lac = 7;
+}
+
+message TmsiMessage {
+	required int32 ant = 1;
+	required string id = 2;
+	required string cell = 3;
+	required int32 rssi = 4;
+}
+
+message UsrpMessage {
+	required int32 ant = 1;
+	required string id = 2;
+}
+
+message NulMessage {
+}
+
+message ResultMessage {
+	optional int32 r = 1;
+}
+
+message LogMessage {
+	required int32 ant = 1;
+	required int32 code = 2;
+	optional string error = 3;
+}
+
+service Locater {
+	rpc SendUsrp(UsrpMessage) returns (ResultMessage);
+	rpc SendTmsi(TmsiMessage) returns (ResultMessage);
+	rpc SendCell(CellMessage) returns (ResultMessage);
+	rpc SendLog(LogMessage) returns (ResultMessage);
+}
+
+enum AirType {
+	GSM = 0;
+	WCDMA = 1;
+	TDSCDMA = 2;
+	CDMA2000 = 3;
+}
+
+message AirTypeMessage {
+	required AirType type = 1;
+}
+
+message GainMessage {
+	required double gain = 1;
+}
+
+service UsrperMessage {
+	rpc Init(AirTypeMessage) returns (ResultMessage);
+	rpc ScanCell(NulMessage) returns (ResultMessage);
+	rpc SetGain(GainMessage) returns (ResultMessage);
+	rpc Listen(CellMessage) returns (ResultMessage);
+	rpc Locate(TmsiMessage) returns (ResultMessage);
+	rpc Stop(NulMessage) returns (ResultMessage);
+	rpc Release(NulMessage) returns (ResultMessage);
+}
+
