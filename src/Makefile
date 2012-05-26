@@ -17,4 +17,5 @@ clean:
 	-rm *.o libwrpc.so $(lib_dir)/libwrpc.so
 install:
 	cp libwrpc.so /usr/local/lib/
+	cp -r $(inc_dir)/wrpc /usr/local/include/
 
