@@ -37,6 +37,10 @@ int Client::Call(google::protobuf::RpcController* controller,
   if (ReadResponse(controller, res) != 0) {
     return -1;
   }
+  if (req->id() != res->id()) {
+    controller->SetFailed("the response is not for the request.");
+    return -1;
+  }
   return 0;
 }
 
