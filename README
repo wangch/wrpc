@@ -1,7 +1,6 @@
-this source code repository for wrpc(a light C++ rpc library).
+this source code repository for wrpc(a lightweight C++ rpc library).
 
 Install:
-
 $cd src
 $make
 $make install
